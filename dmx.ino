@@ -26,7 +26,7 @@ long sum = 0 ; // Store the total value of n measurements
 long level = 0 ; // Store the average value
 long maxLevel = 550;
 long minLevel = 35;
-int sensitvity = 2;
+int sensitivity = 2;
 
 int lights[16][3] = {0};
 
@@ -43,15 +43,15 @@ void printLights()
   DMX.beginTransmission();
   for(int i = 0; i < amount; i++){
     lights[i][1] = 255;
-    DMX.write(i, 255);
-    DMX.write(i + 1, 255);
-    DMX.write(i + 2, 100);
+    DMX.write((i * 3) + 1, 255);
+    DMX.write((i * 3) + 2, 0);
+    DMX.write((i * 3) + 3, 0);
   }
-  for(int i = 15; i > amount - 1; i--){
+  for(int i = 15; i >= amount; i--){
     lights[i][1] = 0;
-    DMX.write(i, 0);
-    DMX.write(i + 1, 0);
-    DMX.write(i + 2, 0);
+    DMX.write((i * 3) + 1, 0);
+    DMX.write((i * 3) + 2, 0);
+    DMX.write((i * 3) + 3, 0);
   }
 
   DMX.endTransmission();
@@ -84,5 +84,5 @@ void loop() {
   printLights();
   sum = 0 ; // Reset the sum of the measurement values
 
-  delay(100);
+  //delay(50);
 }
